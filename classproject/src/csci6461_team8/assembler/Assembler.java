@@ -1,7 +1,7 @@
 package csci6461_team8.assembler;
 
+import java.io.*;
 import java.nio.file.Files;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import csci6461_team8.assembler.PosNotationTools;
+
+import java.util.Scanner;
 
 public class Assembler {
     private static Map<String, String> mnemonicBinaryOpcodeMapper;
@@ -157,6 +159,7 @@ public class Assembler {
             case 36: // SETCCE r (set the E bit of condition code)
                      // Opcode R  IX I Address
                      // 100100 xx 00 0 00000
+                     // 100100 01 00 0 00000
 
             case 23: // NOT rx (logical Not of register to register)
                      // Opcode Rx Ry ------
@@ -257,18 +260,102 @@ public class Assembler {
         return PosNotationTools.octStrFromBinStr(binMachineCodeConvertedFromAssembly(assembly),6);
     }
 
-    public static void assembly(String assemblySrcFilePath, String listingFilePath, String loadFilePath) throws IOException{
-        List<String> assemblyLines = Files.readAllLines(Paths.get(assemblySrcFilePath)); // read all the lines in assembly source file
+    public static void assembly(String assemblySrcFilePath, String listingFilePath, String loadFilePath) throws IOException {
+        List<String> assemblyLines = Files.readAllLines(Paths.get(assemblySrcFilePath));
+        int assemblyLinesSize = assemblyLines.size();
 
-        java.io.OutputStream listingFileOutputStream = Files.newOutputStream(Paths.get(listingFilePath));
-        java.io.OutputStream loadFileOutputStream = Files.newOutputStream(Paths.get(loadFilePath));
+        try (OutputStream listingFileOutputStream = Files.newOutputStream(Paths.get(listingFilePath));
+             OutputStream loadFileOutputStream = Files.newOutputStream(Paths.get(loadFilePath))) {
 
+            int nextInstructionAddress = 0;
 
+            for (int i = 0; i < assemblyLinesSize; i++) {
+                int commentStartIdx = assemblyLines.get(i).indexOf(';');
+                String instr = assemblyLines.get(i).trim();
+                String comment = "";
+
+                if (commentStartIdx != -1) {
+                    instr = assemblyLines.get(i).substring(0, commentStartIdx).trim();
+                    comment = assemblyLines.get(i).substring(commentStartIdx);
+                }
+
+                int mnemonicEndIdx = instr.indexOf(' ');
+                String mnemonic = instr.substring(0, mnemonicEndIdx);
+
+                switch (mnemonic) {
+                    case "LOC": {
+                        nextInstructionAddress = Integer.parseInt(instr.substring(mnemonicEndIdx + 1).trim());
+                        String listingLine = "                        " + String.format("%-24s", instr) + comment;
+                        listingFileOutputStream.write((listingLine + '\n').getBytes());
+                        break;
+                    }
+                    case "Data": {
+                        String octAddressStr = PosNotationTools.octStrFromInteger(nextInstructionAddress, 6);
+                        String dataString = instr.substring(mnemonicEndIdx + 1).trim();
+                        int data = dataString.equals("End") ? 1024 : Integer.parseInt(dataString);
+                        String octDataStr = PosNotationTools.octStrFromInteger(data, 6);
+
+                        String loadLine = String.format("%-12s", octAddressStr) + octDataStr;
+                        loadFileOutputStream.write((loadLine + '\n').getBytes());
+
+                        String listingLine = loadLine + "      " + String.format("%-24s", instr) + comment;
+                        listingFileOutputStream.write((listingLine + '\n').getBytes());
+
+                        nextInstructionAddress += 1;
+                        break;
+                    }
+                    case "End:": {
+                        String octAddressStr = PosNotationTools.octStrFromInteger(nextInstructionAddress, 6);
+                        String loadLine = String.format("%-12s", octAddressStr) + "000000";
+                        loadFileOutputStream.write((loadLine + '\n').getBytes());
+
+                        String listingLine = loadLine + ' ' + String.format("%-29s", "End: HLT") + comment;
+                        listingFileOutputStream.write((listingLine + '\n').getBytes());
+                        break;
+                    }
+                    default: {
+                        String octAddressStr = PosNotationTools.octStrFromInteger(nextInstructionAddress, 6);
+                        String octInstrMachineCode = octMachineCodeConvertedFromAssembly(instr);
+                        String loadLine = String.format("%-12s", octAddressStr) + octInstrMachineCode;
+                        loadFileOutputStream.write((loadLine + '\n').getBytes());
+
+                        String listingLine = loadLine + "      " + String.format("%-24s", instr) + comment;
+                        listingFileOutputStream.write((listingLine + '\n').getBytes());
+
+                        nextInstructionAddress += 1;
+                        break;
+                    }
+                }
+            }
+        }
     }
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Input the path of the assembly source file: ");
+        String assembly = scanner.nextLine();
+        File assemblyFile = new File(assembly);
+        String dir = assemblyFile.getParent();
+        if(dir != null){
+            dir = dir + '/';
+        }
+        else{
+            dir = "";
+        }
+
+        String name = assemblyFile.getName();
+        int lastDotIndex = name.lastIndexOf('.');
+        name = name.substring(0, lastDotIndex);
+
+        String listing, load;
+        listing = dir + name + "listing.txt";
+        load = dir + name + "load.txt";
+
+        assembly(assembly,listing,load);
+
+        System.out.println("Build finished.");
     }
 
 
