@@ -1,23 +1,23 @@
-package csci6461_team8.cpu;
+package CPU;
 
-import string_util;
+import string_utility;
 
-public class Registers {
+public class registers {
 
     // Condition Code: set when arithmetic/logical operations are executed 4 bits
     int cc;
     
-    // General Purpose Register R0 16 bits
-    int r0;
+    // General Purpose Register gpr0 16 bits
+    int gpr0;
     
-    // General Purpose Register R1 16 bits
-    int r1;
+    // General Purpose Register gpr1 16 bits
+    int gpr1;
     
-    // General Purose Register R2 16 bits
-    int r2;
+    // General Purose Register gpr2 16 bits
+    int gpr2;
     
     // General Purpose Register R3 16 bits
-    int r3;
+    int gpr3;
     
     // Instruction Register: holds the instruction to be executed 16 bits
     int ir;
@@ -47,14 +47,14 @@ public class Registers {
     // Program Counter: address of next instruction to be executed 12 bits
     int pc;
 
-    // Index Register X1 16 bits.
-    int x1;
+    // Index Register ixr1 16 bits.
+    int ixr1;
     
     // Index Register X2 16 bits.
-    int x2;
+    int ixr2;
     
-    //Index Register X3 16 bits
-    int x3;
+    //Index Register ixr3 16 bits
+    int ixr3;
 
     // floating point register 16 bits
     int fr0;
@@ -71,7 +71,7 @@ public class Registers {
     int fr1;
 
     // initialize all the registers
-    public Registers() {
+    public registers() {
         this.cc = 0;
         this.ir = 0;
         this.mar = 0;
@@ -79,13 +79,13 @@ public class Registers {
         this.mfr = 0;
         this.msr = 0;
         this.pc = 0;
-        this.r0 = 0;
-        this.r1 = 0;
-        this.r2 = 0;
-        this.r3 = 0;
-        this.x1 = 0;
-        this.x2 = 0;
-        this.x3 = 0;
+        this.gpr0 = 0;
+        this.gpr1 = 0;
+        this.gpr2 = 0;
+        this.gpr3 = 0;
+        this.ixr1 = 0;
+        this.ixr2 = 0;
+        this.ixr3 = 0;
     }
 
     // reset all the registers
@@ -98,13 +98,13 @@ public class Registers {
         this.mfr = 0;
         this.msr = 0;
         this.pc = 0;
-        this.r0 = 0;
-        this.r1 = 0;
-        this.r2 = 0;
-        this.r3 = 0;
-        this.x1 = 0;
-        this.x2 = 0;
-        this.x3 = 0;
+        this.gpr0 = 0;
+        this.gpr1 = 0;
+        this.gpr2 = 0;
+        this.gpr3 = 0;
+        this.ixr1 = 0;
+        this.ixr2 = 0;
+        this.ixr3 = 0;
     }
 
     public int getCC() {
@@ -145,36 +145,36 @@ public class Registers {
         }
     }
 
-    public int getR0() {
-        return r0;
+    public int getGPR0() {
+        return gpr0;
     }
 
-    public void setR0(int r0) {
-        this.r0 = r0;
+    public void setGPR0(int gpr0) {
+        this.gpr0 = gpr0;
     }
 
-    public int getR1() {
-        return r1;
+    public int getGPR1() {
+        return gpr1;
     }
 
-    public void setR1(int r1) {
-        this.r1 = r1;
+    public void setGPR1(int gpr1) {
+        this.gpr1 = gpr1;
     }
 
-    public int getR2() {
-        return r2;
+    public int getGPR2() {
+        return gpr2;
     }
 
-    public void setR2(int r2) {
-        this.r2 = r2;
+    public void setGPR2(int gpr2) {
+        this.gpr2 = gpr2;
     }
 
-    public int getR3() {
-        return r3;
+    public int getGPR3() {
+        return gpr3;
     }
 
-    public void setR3(int r3) {
-        this.r3 = r3;
+    public void setGPR3(int gpr3) {
+        this.gpr3 = gpr3;
     }
 
     // @param num
@@ -184,13 +184,13 @@ public class Registers {
     
     public void setRnByNum(int num, int r) {
         if (num == 0)
-            this.r0 = r;
+            this.gpr0 = r;
         if (num == 1)
-            this.r1 = r;
+            this.gpr1 = r;
         if (num == 2)
-            this.r2 = r;
+            this.gpr2 = r;
         if (num == 3)
-            this.r3 = r;
+            this.gpr3 = r;
     }
 
      //@param num
@@ -200,13 +200,13 @@ public class Registers {
     
     public int getRnByNum(int num) {
         if (num == 0)
-            return this.r0;
+            return this.gpr0;
         if (num == 1)
-            return this.r1;
+            return this.gpr1;
         if (num == 2)
-            return this.r2;
+            return this.gpr2;
         if (num == 3)
-            return this.r3;
+            return this.gpr3;
         return 0;
     }
 
@@ -271,28 +271,28 @@ public class Registers {
         this.pc++;
     }
 
-    public int getX1() {
-        return x1;
+    public int getIXR1() {
+        return ixr1;
     }
 
-    public void setX1(int x1) {
-        this.x1 = x1;
+    public void setIXR1(int ixr1) {
+        this.ixr1 = ixr1;
     }
 
-    public int getX2() {
-        return x2;
+    public int getIXR2() {
+        return ixr2;
     }
 
-    public void setX2(int x2) {
-        this.x2 = x2;
+    public void setIXR2(int ixr2) {
+        this.ixr2 = ixr2;
     }
 
-    public int getX3() {
-        return x3;
+    public int getIXR3() {
+        return ixr3;
     }
 
-    public void setX3(int x3) {
-        this.x3 = x3;
+    public void setIXR3(int ixr3) {
+        this.ixr3 = ixr3;
     }
     
     public int getFR0(){
@@ -318,11 +318,11 @@ public class Registers {
      */
     public int getXnByNum(int num) {
         if (num == 1)
-            return this.x1;
+            return this.ixr1;
         if (num == 2)
-            return this.x2;
+            return this.ixr2;
         if (num == 3)
-            return this.x3;
+            return this.ixr3;
         return 0;
     }
 
@@ -333,11 +333,11 @@ public class Registers {
     
     public void setXnByNum(int num, int x) {
         if (num == 1)
-            this.x1 = x;
+            this.ixr1 = x;
         if (num == 2)
-            this.x2 = x;
+            this.ixr2 = x;
         if (num == 3)
-            this.x3 = x;
+            this.ixr3 = x;
 
     }
     public int getFRByNum(int num){
@@ -553,14 +553,14 @@ public class Registers {
     public int getRegistersByName(String name) {
         if (name.equals("CC"))
             return this.cc;
-        if (name.equals("R0"))
-            return this.r0;
-        if (name.equals("R1"))
-            return this.r1;
-        if (name.equals("R2"))
-            return this.r2;
-        if (name.equals("R3"))
-            return this.r3;
+        if (name.equals("GPR0"))
+            return this.gpr0;
+        if (name.equals("GPR1"))
+            return this.gpr1;
+        if (name.equals("GPR2"))
+            return this.gpr2;
+        if (name.equals("GPR3"))
+            return this.gpr3;
         if (name.equals("IR"))
             return this.ir;
         if (name.equals("MAR"))
@@ -573,12 +573,12 @@ public class Registers {
             return this.msr;
         if (name.equals("PC"))
             return this.pc;
-        if (name.equals("X1"))
-            return this.x1;
-        if (name.equals("X2"))
-            return this.x2;
-        if (name.equals("X3"))
-            return this.x3;
+        if (name.equals("IXR1"))
+            return this.ixr1;
+        if (name.equals("IXR2"))
+            return this.ixr2;
+        if (name.equals("IXR3"))
+            return this.ixr3;
         if (name.equals("FR0"))
             return this.fr0;
         if (name.equals("FR1"))
@@ -609,11 +609,11 @@ public class Registers {
             return 16;
         if (name.equals("PC"))
             return 12;
-        if (name.equals("X1"))
+        if (name.equals("IXR1"))
             return 16;
-        if (name.equals("X2"))
+        if (name.equals("IXR2"))
             return 16;
-        if (name.equals("X3"))
+        if (name.equals("IXR3"))
             return 16;
         if (name.equals("FR0"))
             return 16;
