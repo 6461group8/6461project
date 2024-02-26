@@ -1,4 +1,4 @@
-package cpu;
+package csci6461_team8.cpu;
 
 import string_util;
 
