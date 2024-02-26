@@ -1,6 +1,6 @@
 package cpu;
 
-import util.StringUtil;
+import string_util;
 
 public class Registers {
 
