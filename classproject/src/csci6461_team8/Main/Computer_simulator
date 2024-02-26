@@ -2,6 +2,7 @@ package Main_Pacakge;  // Main Package class
 import csci6461_team8.CPU.registers;
 import csci6461_team8.assembler.Assembler;
 import csci6461_team8.simulator.SimulatorGUI;
+// import csc16461_team8.memory.Memory; this file still does not exist someone has to make it
 
 public class Computer_simulator {
     public static void main(String[] args) {
