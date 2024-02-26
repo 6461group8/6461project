@@ -1,7 +1,5 @@
 package CPU;
 
-import string_utility;
-
 public class registers {
 
     // Condition Code: set when arithmetic/logical operations are executed 4 bits
