@@ -1,4 +1,4 @@
-package util;
+package cpu;
 
 import java.math.BigInteger;
 
