@@ -1,0 +1,21 @@
+package Main_Pacakge;  // Main Package class
+import csci6461_team8.CPU.registers;
+import csci6461_team8.assembler.Assembler;
+import csci6461_team8.simulator.SimulatorGUI;
+
+public class Computer_simulator {
+    public static void main(String[] args) {
+        // Create an instance of registers
+        registers cpuRegisters = new registers();
+
+        // Perform CPU simulation or any other logic
+        // ...
+
+        // Example: printing values of registers
+        System.out.println("CC: " + cpuRegisters.getCC());
+        System.out.println("GPR0: " + cpuRegisters.getGPR0());
+        // ... (print other registers)
+
+        // You can perform your CPU simulation logic here
+    }
+}
