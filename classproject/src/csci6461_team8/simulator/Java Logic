@@ -1,0 +1,59 @@
+public class Main {
+    
+}
+//JCC
+if (condition) {
+    // jump equivalent, perhaps setting an instruction pointer or executing a method
+}
+//TRAP
+System.out.println("This is a trap/system call simulation.");
+
+//STR
+int memoryAddress10 = register1;
+
+//LDA
+int register0 = memory[4]; // Assuming 'memory' is an array or similar structure.
+
+
+//LDX/STX
+int indexRegister = array[8];
+array[6] = indexRegister;
+
+//JZ/JNE
+if (value == 0) { /* jump to instruction */ }
+if (value != 0) { /* jump to instruction */ }
+
+
+//AMR
+register2 += memory[8];
+register2 -= memory[0];
+
+
+//AIR/SIR
+register2 += 9;
+register2 -= 8;
+
+
+//MLT
+register2 *= register1;
+register1 /= register2;
+
+
+//Logical Operators (And, ORR, Not TRR)
+register2 = register2 & register3;
+register1 = register1 | register3;
+register2 = ~register2;
+boolean equal = register2 == register3;
+
+//SRC/RRC ShiftRotate Right
+
+//In/ Out (Input / Output)
+int input = System.in.read(); // IN
+System.out.println(input); // OUT
+
+//CHK
+boolean isFileAvailable = checkFileStatus("filename");
+
+
+
+
