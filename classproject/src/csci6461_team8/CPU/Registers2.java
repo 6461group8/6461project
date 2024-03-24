@@ -1,3 +1,5 @@
+package CPU;
+
 public class Index_Registers{
 	//initializes the index registers
 	private int[] registers = {0, 0, 0};
